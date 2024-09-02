@@ -1,0 +1,85 @@
+/* src/styles.css */
+
+
+
+/* src/styles.css */
+
+.fade-enter {
+  opacity: 0;
+  transform: scale(0.9);
+}
+.fade-enter-active {
+  opacity: 1;
+  transform: scale(1);
+  transition: opacity 500ms, transform 500ms;
+}
+.fade-exit {
+  opacity: 1;
+  transform: scale(1);
+}
+.fade-exit-active {
+  opacity: 0;
+  transform: scale(0.9);
+  transition: opacity 500ms, transform 500ms;
+}
+
+/* Reset some default browser styling */
+body {
+    margin: 0;
+    font-family: Roboto, Open Sans, sans-serif;
+    background-color: #F5F5F5;
+  }
+  
+  #root {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+  }
+  
+  /* Container to flex and take the remaining height */
+  .Container {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  /* Header styling */
+  .MuiAppBar-root {
+    background-color: #6AB7F8; /* Primary color */
+  }
+  
+  .MuiToolbar-root {
+    display: flex;
+    justify-content: space-between;
+  }
+  
+  /* Footer styling */
+  .MuiBottomNavigation-root {
+    background-color: #0B72B9; /* Secondary color */
+  }
+  
+  /* Main content styling */
+  .MuiCard-root {
+    padding: 16px;
+    background-color: #FFFFFF;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    margin: 16px 0;
+    border-radius: 8px;
+  }
+  
+  /* Text input and button styling */
+  .MuiTextField-root {
+    margin-top: 16px;
+    width: 100%;
+  }
+  
+  .MuiButton-root {
+    margin-top: 16px;
+    background-color: #6AB7F8; /* Primary color */
+    color: #FFFFFF;
+  }
+  
+  .MuiButton-root:hover {
+    background-color: #0B72B9; /* Secondary color */
+  }
+  

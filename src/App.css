@@ -1,0 +1,176 @@
+body {
+  margin: 50;
+  padding: 0;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+#root {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+main {
+  flex: 1;
+}
+
+footer {
+  position: fixed;
+  width: 100%;
+  bottom: 100;
+}
+
+/* App.css */
+body, html, #root {
+  height: 100%;
+  margin: 0;
+  background-color: #2c2c2c; /* Light grey background */
+  font-family: 'Roboto Slab', serif; /* Apply the new font */
+}
+
+.container-bg {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+
+
+
+.navbar-bg {
+  background: linear-gradient(to right, #000000, #434343);
+}
+
+.white-text {
+  color: white;
+  font-family: 'Arial, sans-serif';
+  font-weight: bold;
+}
+
+/* Silvery text color for headings */
+.silvery-text {
+  color: #C0C0C0; /* Silvery color */
+}
+
+/* Add font-family for body */
+body {
+  font-family: 'Roboto', sans-serif;
+}
+
+
+/* Sparkle effect */
+@keyframes sparkle {
+  0% { opacity: 0; transform: scale(0.5) translate(-50%, -50%); }
+  50% { opacity: 1; transform: scale(1.5) translate(-50%, -50%); }
+  100% { opacity: 0; transform: scale(2.5) translate(-50%, -50%); }
+}
+
+.sparkle-button {
+  position: relative;
+  overflow: hidden;
+  z-index: 1;
+  background-color: #61dafb;
+  color: #282c34;
+  border: none;
+  padding: 15px 30px;
+  font-size: 16px;
+  cursor: pointer;
+  border-radius: 4px;
+  transition: background-color 0.3s ease;
+}
+
+.sparkle-button:hover {
+  background-color: #1296e9;
+}
+
+.sparkle-button:hover::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 100px;
+  height: 100px;
+  background: radial-gradient(circle, rgba(255,255,255,0.3) 0%, rgba(255,255,255,0) 80%);
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  animation: sparkle 1s ease-out infinite;
+}
+
+
+
+
+
+
+
+
+@keyframes sparkle {
+  0%, 100% { opacity: 0; }
+  50% { opacity: 1; }
+}
+
+@keyframes sparkleMove {
+  0% { transform: translate(0, 0); }
+  100% { transform: translate(120px, -120px); }
+}
+
+.button-sparkle {
+  position: relative;
+  display: inline-block;
+  padding: 10px 20px;
+  color: #ffffff;
+  background-color: #1e90ff;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  overflow: hidden;
+  transition: background-color 0.3s;
+}
+
+.button-sparkle:hover {
+  background-color: #00bfff;
+}
+
+.button-sparkle:hover .sparkle {
+  opacity: 1;
+  animation: sparkleMove 1.5s linear infinite;
+}
+
+.sparkle {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 15px;
+  height: 15px;
+  background-color: #3e61ad;
+  box-shadow: 0 0 10px #eebbae;
+  border-radius: 50%;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.sparkle:nth-child(1) {
+  top: -5px;
+  left: -5px;
+  animation: sparkle 1.5s linear infinite;
+}
+
+.sparkle:nth-child(2) {
+  top: -5px;
+  right: -5px;
+  animation: sparkle 1.5s linear infinite;
+}
+
+.sparkle:nth-child(3) {
+  bottom: -5px;
+  left: -5px;
+  animation: sparkle 1.5s linear infinite;
+}
+
+.sparkle:nth-child(4) {
+  bottom: -5px;
+  right: -5px;
+  animation: sparkle 1.5s linear infinite;
+}
+
+

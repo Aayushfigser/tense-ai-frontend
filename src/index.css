@@ -1,0 +1,60 @@
+/* src/index.css */
+
+html, body, #root {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'Roboto', sans-serif;
+  background-color: #0e0a0a00;
+}
+
+#root {
+  display: flex;
+  flex-direction: column;
+}
+
+header {
+  margin-bottom: 20px;
+}
+
+footer {
+  background-color: rgba(90, 86, 86, 0.705);
+}
+
+main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+button {
+  margin: 10px 0;
+  width: 80%;
+  max-width: 300px;
+}
+
+@media (max-width: 600px) {
+  .MuiContainer-root {
+    padding-left: 8px;
+    padding-right: 8px;
+  }
+
+  .MuiTypography-h1 {
+    font-size: 2rem;
+  }
+
+  .MuiTypography-h4 {
+    font-size: 1.5rem;
+  }
+
+  .MuiCard-root {
+    margin: 8px;
+  }
+}
+

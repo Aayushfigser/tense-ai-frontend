@@ -1,0 +1,16 @@
+.loading-button {
+    background: linear-gradient(90deg, #000000, #000000, #000000, #000000, #000000, #000000, #0000ff, #0000ff);
+    background-size: 400% 400%;
+    animation: loadingAnimation 2s ease infinite;
+    color: transparent;
+  }
+  
+  @keyframes loadingAnimation {
+    0% {
+      background-position: 100% 50%;
+    }
+    100% {
+      background-position: 0% 50%;
+    }
+  }
+  
