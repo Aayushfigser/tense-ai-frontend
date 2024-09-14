@@ -28,14 +28,15 @@ const Profile = () => {
                         <p>ayushfigser@gmail.com</p>
                         <h2>Hi, Aayush!</h2>
                     </div>
-                </div>
-                <Button variant="contained" className="profile-button" onClick={handleManageAccount}>
+                </div> 
+               { <Button variant="contained" className="profile-button" onClick={handleManageAccount}>
                     Manage your Account
-                </Button> <br></br>
+                </Button>} <br></br>
+                
                 
                 <Button variant="contained" className="profile-button" onClick={handleLogout}>
                     Logout
-                </Button>
+                </Button> 
                 <div className="profile-footer">
                     <a href="./">Privacy Policy</a>
                     <a href="https:www.recoillife.com/">Terms of Service</a>
@@ -46,3 +47,4 @@ const Profile = () => {
 };
 
 export default Profile;
+
