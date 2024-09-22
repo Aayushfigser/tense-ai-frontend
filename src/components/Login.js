@@ -1,14 +1,14 @@
 import React, { useState, useContext } from 'react';
 import { AuthContext } from '../contexts/AuthContext';
 import { TextField, Button, Typography, Container, Box, Card, CardContent } from '@mui/material';
-import { login } from '../services/apiService'; 
+import { login as apiLogin } from '../services/apiService'; 
 import { useNavigate } from 'react-router-dom';
 
 const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
-  const { setAuth } = useContext(AuthContext);
+  const { login } = useContext(AuthContext);
   const navigate = useNavigate();
 
   const handleLogin = async () => {
@@ -16,12 +16,12 @@ const Login = () => {
       const trimmedEmail = email.trim();
       const trimmedPassword = password.trim();
 
-      console.log("Login attempt with:", { email: trimmedEmail, password: trimmedPassword });
-
-      const response = await login({ email: trimmedEmail, password: trimmedPassword });
-      console.log("Login response:", response.data);
-
-      setAuth(response.data);
+      const data = await apiLogin({ email: trimmedEmail, password: trimmedPassword });
+    
+      const token = data["token"]
+      const user = data["name"]
+      
+      login(token, user)
       navigate('/');
     } catch (err) {
       console.error("Login error:", err);

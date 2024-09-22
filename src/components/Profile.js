@@ -1,9 +1,12 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useEffect, useState } from 'react';
 import { Button } from '@mui/material';
+import { getUserProfile } from '../api/userService';
 import '../styles/Profile.css';
 
 const Profile = () => {
+    const [userData, setUserData] = useState(null);  // Initialize state for user data
     const navigate = useNavigate();
 
     const handleLogout = () => {
@@ -17,16 +20,22 @@ const Profile = () => {
         navigate('/register');
     };
 
+    useEffect(() => {
+        const token = localStorage.getItem('token');
+        getUserProfile(token).then(setUserData);
+    }, []);
+
+
     return (
         <div className="profile-container">
             <div className="profile-box">
                 <div className="profile-avatar">
                     <div className="avatar-circle">
-                        <span className="initial">A</span>
+                        {userData ? userData.name.charAt(0).toUpperCase() : 'Loading...'}
                     </div>
                     <div className="profile-info">
-                        <p>ayushfigser@gmail.com</p>
-                        <h2>Hi, Aayush!</h2>
+                        <p>{userData ? userData.email : 'Loading...'}</p>  
+                        <h2>{userData ? "Hi " + userData.name.split(" ")[0] : 'Loading...'}</h2> 
                     </div>
                 </div> 
                { <Button variant="contained" className="profile-button" onClick={handleManageAccount}>

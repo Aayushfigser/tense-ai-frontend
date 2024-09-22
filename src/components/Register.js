@@ -106,7 +106,7 @@ const Register = ({ onSwitchToLogin, onRegisterSuccess }) => {
           )}
           <Grid container justifyContent="flex-end">
             <Grid item>
-              <Link href="#" variant="body2" onClick={onSwitchToLogin}>
+              <Link href="./login" variant="body2" onClick={onSwitchToLogin}>
                 Already have an account? Sign in
               </Link>
             </Grid>
