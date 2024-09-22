@@ -1,22 +1,27 @@
-//CheckRoutine.js
+//Read mentioned comment for better understanding
+//@bhanu Your first goal is to connect this with backend and database, then analyse the fetching logic
+//Design is perfect, some logic is wrong here, the data will fetch from past, present and future. the fetching logic is developed some other freelancer..
 
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { Container, Typography, Box, Button, List, ListItem, ListItemText, IconButton, Paper, Checkbox } from '@mui/material';
-import { Add as AddIcon, Delete as DeleteIcon } from '@mui/icons-material';
+import { Container, Typography, Box, Button, List, ListItem, ListItemText, IconButton, Paper, Checkbox, Tooltip } from '@mui/material';
+import { Add as AddIcon, Delete as DeleteIcon, CalendarMonth as CalendarIcon } from '@mui/icons-material';
 import { Calendar, momentLocalizer } from 'react-big-calendar';
 import moment from 'moment';
 import 'react-big-calendar/lib/css/react-big-calendar.css';
+import { fetchAIData, getEfficiencySuggestions } from './aiService'; // AI-powered logic (Mockup)
+
 
 const localizer = momentLocalizer(moment);
 
 const CheckRoutine = () => {
   const [routines, setRoutines] = useState([]);
   const [efficiency, setEfficiency] = useState(0);
+  const [aiSuggestions, setAiSuggestions] = useState([]);
 
   const fetchRoutines = async () => {
     try {
-      const response = await axios.get('/api/routines'); // Changed to relative URL
+      const response = await axios.get('/api/routines');
       if (Array.isArray(response.data)) {
         setRoutines(response.data);
         calculateEfficiency(response.data);
@@ -28,8 +33,18 @@ const CheckRoutine = () => {
     }
   };
 
+  const fetchAISuggestions = async () => {
+    try {
+      const aiResponse = await fetchAIData(); // AI fetches routines from Past, present & Future, based on user's browsing habits or preferences
+      setAiSuggestions(aiResponse.data);
+    } catch (error) {
+      console.error('Error fetching AI suggestions:', error);
+    }
+  };
+
   useEffect(() => {
     fetchRoutines();
+    fetchAISuggestions(); //fetch from past, present and future tab data
   }, []);
 
   const calculateEfficiency = (routines) => {
@@ -41,7 +56,7 @@ const CheckRoutine = () => {
   const handleAddRoutine = async () => {
     try {
       const newRoutine = { name: 'New Routine', description: 'Routine description', start: new Date(), end: new Date() };
-      await axios.post('/api/routines', newRoutine); // Changed to relative URL
+      await axios.post('/api/routines', newRoutine);
       fetchRoutines();
     } catch (error) {
       console.error('Error adding routine:', error);
@@ -50,7 +65,7 @@ const CheckRoutine = () => {
 
   const handleDeleteRoutine = async (id) => {
     try {
-      await axios.delete(`/api/routines/${id}`); // Changed to relative URL
+      await axios.delete(`/api/routines/${id}`);
       fetchRoutines();
     } catch (error) {
       console.error('Error deleting routine:', error);
@@ -59,80 +74,105 @@ const CheckRoutine = () => {
 
   const handleToggleComplete = async (id) => {
     try {
-      await axios.patch(`/api/routines/complete/${id}`); // Changed to relative URL
+      await axios.patch(`/api/routines/complete/${id}`);
       fetchRoutines();
     } catch (error) {
       console.error('Error toggling routine completion:', error);
     }
   };
 
+  const applyAISuggestions = async () => {
+    const efficiencyTips = await getEfficiencySuggestions(routines); // Get AI suggestions for better routines
+    setAiSuggestions(efficiencyTips);
+  };
+
   return (
-    <Container sx={{ mt: 1 }}>
-      <Typography variant="h4" gutterBottom sx={{ fontWeight: 'bold', color: '#fff' }}>
-        Check Routine
+    <Container sx={{ mt: 0, color: '#f5f5f5' }}>
+      <Typography variant="h5" gutterBottom sx={{ fontWeight: 'bold', color: '#1976d2' }}>
+       PERFORMANCE ROUTINE
       </Typography>
-      <Button
-        variant="contained"
-        color="primary"
-        startIcon={<AddIcon />}
-        onClick={handleAddRoutine}
-        sx={{ mb: 2, bgcolor: '#1976d2', color: '#fff', '&:hover': { bgcolor: '#1565c0' } }}
-      >
-        New Habit
-      </Button>
+      
+      <Tooltip title="Add a new habit/routine based on your preferences">
+        <Button
+          variant="contained"
+          color="primary"
+          startIcon={<AddIcon />}
+          onClick={handleAddRoutine}
+          sx={{ mb: 1, bgcolor: '#007BFF', color: '#fff', '&:hover': { bgcolor: '#0056b3' } }}
+        >
+          Add Distiny
+        </Button>
+      </Tooltip>
+
       <Paper elevation={3} sx={{ padding: 2, mb: 4, bgcolor: '#333' }}>
         <List>
-          {Array.isArray(routines) &&
-            routines.map((routine) => (
-              <ListItem
-                key={routine.id}
-                sx={{
-                  display: 'flex',
-                  justifyContent: 'space-between',
-                  bgcolor: '#444',
-                  mb: 1,
-                  borderRadius: 1,
-                  padding: 1,
-                }}
-              >
-                <Checkbox
-                  checked={routine.completed}
-                  onChange={() => handleToggleComplete(routine.id)}
-                  sx={{ color: '#fff' }}
-                />
-                <ListItemText
-                  primary={routine.name}
-                  secondary={routine.description}
-                  primaryTypographyProps={{ fontWeight: 'bold', color: '#fff' }}
-                  secondaryTypographyProps={{ color: '#ccc' }}
-                />
-                <IconButton edge="end" aria-label="delete" onClick={() => handleDeleteRoutine(routine.id)} sx={{ color: '#f44336' }}>
-                  <DeleteIcon />
-                </IconButton>
-              </ListItem>
-            ))}
+          {Array.isArray(routines) && routines.map((routine) => (
+            <ListItem key={routine.id} sx={{ display: 'flex', justifyContent: 'space-between', bgcolor: '#444', mb: 1, borderRadius: 1 }}>
+              <Checkbox
+                checked={routine.completed}
+                onChange={() => handleToggleComplete(routine.id)}
+                sx={{ color: '#fff' }}
+              />
+              <ListItemText
+                primary={routine.name}
+                secondary={routine.description}
+                primaryTypographyProps={{ fontWeight: 'bold', color: '#fff' }}
+                secondaryTypographyProps={{ color: '#ccc' }}
+              />
+              <IconButton edge="end" aria-label="delete" onClick={() => handleDeleteRoutine(routine.id)} sx={{ color: '#f44336' }}>
+                <DeleteIcon />
+              </IconButton>
+            </ListItem>
+          ))}
         </List>
       </Paper>
+
       <Box sx={{ height: '500px', bgcolor: '#222', borderRadius: '8px', border: '1px solid #ddd', padding: 2 }}>
         <Calendar
           localizer={localizer}
-          events={
-            Array.isArray(routines)
-              ? routines.map((routine) => ({
-                  ...routine,
-                  title: routine.name,
-                  style: { backgroundColor: routine.completed ? '#4caf50' : '#1976d2', color: '#fff' },
-                }))
-              : []
+          events={Array.isArray(routines)
+            ? routines.map((routine) => ({
+              ...routine,
+              title: routine.name,
+              style: { backgroundColor: routine.completed ? '#4caf50' : '#1976d2', color: '#fff' },
+            }))
+            : []
           }
           startAccessor="start"
           endAccessor="end"
           style={{ height: '100%', width: '100%', color: '#fff' }}
         />
       </Box>
-      <Typography variant="h5" sx={{ mt: 3, color: '#fff' }}>
-        Efficiency: {efficiency.toFixed(2)}%
-      </Typography>
+
+      <Box sx={{ mt: 4 }}>
+        <Typography variant="h5" sx={{ color: '#1976d2' }}>
+          Efficiency: {efficiency.toFixed(2)}%
+        </Typography>
+
+        <Typography variant="h6" sx={{ mt: 2, color: '#f5f5f5' }}>
+          AI Suggestions for Efficiency:
+        </Typography>
+
+        <List>
+          {aiSuggestions.length > 0 ? aiSuggestions.map((tip, index) => (
+            <ListItem key={index} sx={{ color: '#ccc' }}>
+              <ListItemText primary={tip} />
+            </ListItem>
+          )) : (
+            <Typography sx={{ color: '#999' }}>No suggestions available.</Typography>
+          )}
+        </List>
+        
+        <Button
+          variant="contained"
+          color="secondary"
+          onClick={applyAISuggestions}
+          startIcon={<CalendarIcon />}
+          sx={{ mt: 3 }}
+        >
+          Apply AI Suggestions
+        </Button>
+      </Box>
     </Container>
   );
 };
