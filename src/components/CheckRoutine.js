@@ -1,4 +1,4 @@
-//Read mentioned comment for better understanding
+
 //@bhanu Your first goal is to connect this with backend and database, then analyse the fetching logic
 //Design is perfect, some logic is wrong here, the data will fetch from past, present and future. the fetching logic is developed some other freelancer..
 
@@ -9,6 +9,7 @@ import { Add as AddIcon, Delete as DeleteIcon, CalendarMonth as CalendarIcon } f
 import { Calendar, momentLocalizer } from 'react-big-calendar';
 import moment from 'moment';
 import 'react-big-calendar/lib/css/react-big-calendar.css';
+import { useNavigate } from 'react-router-dom';
 import { fetchAIData, getEfficiencySuggestions } from './aiService'; // AI-powered logic (Mockup)
 
 
@@ -18,6 +19,13 @@ const CheckRoutine = () => {
   const [routines, setRoutines] = useState([]);
   const [efficiency, setEfficiency] = useState(0);
   const [aiSuggestions, setAiSuggestions] = useState([]);
+  const navigate = useNavigate();  // Initialize the navigate hook
+
+  // Your state and other functions here
+
+  const handleDistiny = () => {
+    navigate('/Distiny');  // Navigate to the AddRoutine page
+  };
 
   const fetchRoutines = async () => {
     try {
@@ -35,7 +43,7 @@ const CheckRoutine = () => {
 
   const fetchAISuggestions = async () => {
     try {
-      const aiResponse = await fetchAIData(); // AI fetches routines from Past, present & Future, based on user's browsing habits or preferences
+      const aiResponse = await fetchAIData(); // AI fetches routines based on user's browsing habits or preferences
       setAiSuggestions(aiResponse.data);
     } catch (error) {
       console.error('Error fetching AI suggestions:', error);
@@ -44,8 +52,8 @@ const CheckRoutine = () => {
 
   useEffect(() => {
     fetchRoutines();
-    fetchAISuggestions(); //fetch from past, present and future tab data
-  }, []);
+    fetchAISuggestions(); 
+  }, );
 
   const calculateEfficiency = (routines) => {
     const total = routines.length;
@@ -97,10 +105,11 @@ const CheckRoutine = () => {
           variant="contained"
           color="primary"
           startIcon={<AddIcon />}
-          onClick={handleAddRoutine}
+          onClick={handleDistiny}
           sx={{ mb: 1, bgcolor: '#007BFF', color: '#fff', '&:hover': { bgcolor: '#0056b3' } }}
         >
-          Add Distiny
+          Add Distiny 
+          
         </Button>
       </Tooltip>
 
@@ -178,3 +187,4 @@ const CheckRoutine = () => {
 };
 
 export default CheckRoutine;
+
