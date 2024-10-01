@@ -29,10 +29,16 @@ const CheckRoutine = () => {
 
   const fetchRoutines = async () => {
     try {
-      const response = await axios.get('/api/routines');
+      const token = localStorage.getItem('token');
+      const config = {
+          headers: {
+              Authorization: `Bearer ${token}`,
+          },
+      };  
+      const response = await axios.get('http://localhost:5000/api/routines', config);
       if (Array.isArray(response.data)) {
-        setRoutines(response.data);
         calculateEfficiency(response.data);
+        return response.data
       } else {
         console.error('Error: response.data is not an array');
       }
@@ -51,8 +57,8 @@ const CheckRoutine = () => {
   };
 
   useEffect(() => {
-    fetchRoutines();
-    fetchAISuggestions(); 
+    fetchRoutines().then(setRoutines);
+    // fetchAISuggestions().then(setAiSuggestions); 
   }, );
 
   const calculateEfficiency = (routines) => {
@@ -116,14 +122,14 @@ const CheckRoutine = () => {
       <Paper elevation={3} sx={{ padding: 2, mb: 4, bgcolor: '#333' }}>
         <List>
           {Array.isArray(routines) && routines.map((routine) => (
-            <ListItem key={routine.id} sx={{ display: 'flex', justifyContent: 'space-between', bgcolor: '#444', mb: 1, borderRadius: 1 }}>
+            <ListItem key={routine._id} sx={{ display: 'flex', justifyContent: 'space-between', bgcolor: '#444', mb: 1, borderRadius: 1 }}>
               <Checkbox
                 checked={routine.completed}
                 onChange={() => handleToggleComplete(routine.id)}
                 sx={{ color: '#fff' }}
               />
               <ListItemText
-                primary={routine.name}
+                primary={routine.goal}
                 secondary={routine.description}
                 primaryTypographyProps={{ fontWeight: 'bold', color: '#fff' }}
                 secondaryTypographyProps={{ color: '#ccc' }}

@@ -6,6 +6,7 @@ import NavigationBar from './components/NavigationBar';
 import BottomNavigationBar from './components/BottomNavigationBar';
 import Home from './components/Home';
 import CheckRoutine from './components/CheckRoutine';
+import Distiny from './components/Distiny'
 import CheckEfficiency from './components/CheckEfficiency';
 import Past from './components/Past';
 import Present from './components/Present';
@@ -34,6 +35,7 @@ const App = () => {
               <Route path="/login" element={<Login />} />
               <Route path="/register" element={<Register />} />
               <Route path="/check-routine" element={<CheckRoutine />} />
+              <Route path="/Distiny" element={<Distiny/>}/>
               <Route path="/check-efficiency" element={<CheckEfficiency />} />
               <Route path="/past" element={<Past />} />
               <Route path="/present" element={<Present />} />
