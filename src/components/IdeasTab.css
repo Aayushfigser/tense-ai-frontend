@@ -1,0 +1,111 @@
+
+.ideas-tab {
+    text-align: center;
+    margin-top: 50px;
+}
+
+.idea-section {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    margin-bottom: 20px;
+}
+
+.card {
+    background-color: #f0f0f0;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    padding: 20px;
+    width: 150px;
+    cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.2s;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+}
+
+.card h3 {
+    margin-top: 10px;
+}
+
+.sub-section {
+    margin-top: 20px;
+}
+
+.sub-section h3 {
+    margin-bottom: 15px;
+}
+
+.video-feed {
+    width: 100%;
+    max-width: 600px;
+    height: auto;
+    border: 2px solid #ddd;
+    border-radius: 10px;
+    margin: 20px 0;
+}
+
+.vision-options {
+    margin-top: 20px;
+}
+
+button {
+    background-color: #333;
+    color: white;
+    padding: 10px 20px;
+    margin: 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s;
+}
+
+button:hover {
+    background-color: #555;
+    transform: translateY(-2px);
+}
+
+.button-icon {
+    margin-right: 8px;
+}
+
+.icon {
+    font-size: 30px;
+    color: #333;
+}
+
+.mic-container {
+    display: flex;
+    justify-content: center;
+    margin: 20px 0;
+}
+
+.microphone {
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    background-color: #333;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    font-size: 40px;
+    cursor: pointer;
+    transition: transform 0.2s;
+}
+
+.microphone.listening {
+    background-color: #ff5722; /* Color when listening */
+    transform: scale(1.1); /* Scale effect when listening */
+}
+
+.user-response {
+    margin-top: 15px;
+    font-size: 18px;
+    color: #555;
+}
