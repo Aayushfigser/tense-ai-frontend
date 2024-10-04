@@ -31,6 +31,7 @@
 
 .card h3 {
     margin-top: 10px;
+    
 }
 
 .sub-section {
@@ -39,6 +40,8 @@
 
 .sub-section h3 {
     margin-bottom: 15px;
+    color: rgba(111, 194, 194, 0.87)
+    
 }
 
 .video-feed {
@@ -100,7 +103,7 @@ button:hover {
 }
 
 .microphone.listening {
-    background-color: #ff5722; /* Color when listening */
+    background-color: #22a7ff; /* Color when listening */
     transform: scale(1.1); /* Scale effect when listening */
 }
 
