@@ -8,9 +8,42 @@ const CheckEfficiency = () => {
   const [efficiency, setEfficiency] = useState(null);
   const [loading, setLoading] = useState(true);
 
+  const recommendations = [];  
+
+  const fetchRoutines = async () => {
+    try {
+      const token = localStorage.getItem('token');
+      const config = {
+          headers: {
+              Authorization: `Bearer ${token}`,
+          },
+      };  
+      const response = await axios.get('http://localhost:5000/api/routines', config);
+      if (Array.isArray(response.data)) {
+        calculateEfficiency(response.data);
+      } else {
+        console.error('Error: response.data is not an array');
+      }
+    } catch (error) {
+      console.error('Error fetching routines:', error);
+    }
+  };
+
   useEffect(() => {
-    fetchEfficiency();
+    fetchRoutines();
   }, []);
+
+  const calculateEfficiency = (routines) => {
+    try {
+      const total = routines.length;
+      const completed = routines.filter((routine) => routine.completed).length;
+      setEfficiency((completed / total) * 100);
+    } catch (error) {
+      console.error('Error fetching efficiency:', error);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   const fetchEfficiency = async () => {
     try {
@@ -42,10 +75,10 @@ const CheckEfficiency = () => {
         {efficiency ? (
           <>
             <Typography variant="body1" gutterBottom sx={{ color: 'white' }}>
-              Your current efficiency is: {efficiency.percentage}%
+              Your current efficiency is: {efficiency}%
             </Typography>
             <List>
-              {efficiency.recommendations.map((recommendation, index) => (
+              {recommendations.map((recommendation, index) => (
                 <ListItem key={index}>
                   <ListItemText primary={recommendation} sx={{ color: 'white' }} />
                 </ListItem>
@@ -57,7 +90,7 @@ const CheckEfficiency = () => {
             No efficiency data available.
           </Typography>
         )}
-        <Button variant="contained" color="primary" sx={{ mt: 3 }}>
+        <Button variant="contained" color="primary" sx={{ mt: 3 }} onClick={fetchRoutines}>
           Re-Evaluate
         </Button>
       </Box>

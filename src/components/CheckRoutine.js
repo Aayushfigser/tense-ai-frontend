@@ -1,5 +1,5 @@
 
-//@bhanu Your first goal is to connect this with backend and database, then analyse the fetching logic
+//@bhanu Your first goal is to connect this with backend and database, then analyse the fetching logic.
 //Design is perfect, some logic is wrong here, the data will fetch from past, present and future. the fetching logic is developed some other freelancer..
 
 import React, { useState, useEffect } from 'react';
@@ -67,28 +67,19 @@ const CheckRoutine = () => {
     setEfficiency((completed / total) * 100);
   };
 
-  const handleAddRoutine = async () => {
+  const handleDeleteRoutine = async (_id) => {
     try {
-      const newRoutine = { name: 'New Routine', description: 'Routine description', start: new Date(), end: new Date() };
-      await axios.post('/api/routines', newRoutine);
-      fetchRoutines();
-    } catch (error) {
-      console.error('Error adding routine:', error);
-    }
-  };
-
-  const handleDeleteRoutine = async (id) => {
-    try {
-      await axios.delete(`/api/routines/${id}`);
+      await axios.delete(`http://localhost:5000/api/routines/${_id}`)
       fetchRoutines();
     } catch (error) {
       console.error('Error deleting routine:', error);
     }
   };
 
-  const handleToggleComplete = async (id) => {
+  const handleToggleComplete = async (_id, completedStatus) => {
     try {
-      await axios.patch(`/api/routines/complete/${id}`);
+      const isCompleted = !completedStatus;
+      await axios.put(`http://localhost:5000/api/routines/${_id}`, {completed : isCompleted});
       fetchRoutines();
     } catch (error) {
       console.error('Error toggling routine completion:', error);
@@ -125,7 +116,7 @@ const CheckRoutine = () => {
             <ListItem key={routine._id} sx={{ display: 'flex', justifyContent: 'space-between', bgcolor: '#444', mb: 1, borderRadius: 1 }}>
               <Checkbox
                 checked={routine.completed}
-                onChange={() => handleToggleComplete(routine.id)}
+                onChange={() => handleToggleComplete(routine._id, routine.completed)}
                 sx={{ color: '#fff' }}
               />
               <ListItemText
@@ -134,7 +125,7 @@ const CheckRoutine = () => {
                 primaryTypographyProps={{ fontWeight: 'bold', color: '#fff' }}
                 secondaryTypographyProps={{ color: '#ccc' }}
               />
-              <IconButton edge="end" aria-label="delete" onClick={() => handleDeleteRoutine(routine.id)} sx={{ color: '#f44336' }}>
+              <IconButton edge="end" aria-label="delete" onClick={() => handleDeleteRoutine(routine._id)} sx={{ color: '#f44336' }}>
                 <DeleteIcon />
               </IconButton>
             </ListItem>

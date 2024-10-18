@@ -17,7 +17,7 @@ const Present = () => {
 
     try {
       const response = await analyzePresent({ text });
-      setResult(response.candidates || response);  // Assuming candidates contains the data you want to render
+      setResult(response.message || response);  // Assuming candidates contains the data you want to render
     } catch (error) {
       setError(error.response?.data?.error?.message || 'An error occurred while analyzing the present.');
     } finally {
@@ -66,13 +66,7 @@ const Present = () => {
             <Card sx={{ mt: 2, width: '100%', p: 2 }}>
               <CardContent>
                 <Typography variant="h5">Analysis Result:</Typography>
-                {Array.isArray(result) ? (
-                  result.map((candidate, index) => (
-                    <Typography key={index}>{candidate.text}</Typography> // Assuming candidate.text is the string you want to render
-                  ))
-                ) : (
-                  <Typography>{result.text}</Typography> // Assuming result.text is the string you want to render
-                )}
+                <Typography>{result}</Typography>
               </CardContent>
             </Card>
           )}

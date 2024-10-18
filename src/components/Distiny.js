@@ -12,6 +12,8 @@ import axios from 'axios';
 import { LocalizationProvider } from '@mui/x-date-pickers'; // Import LocalizationProvider
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'; // Import date adapter (Dayjs)
 import { daDK } from '@mui/x-date-pickers/locales';
+import { useNavigate } from 'react-router-dom';
+
 
 const Distiny = () => {
   const [goal, setGoal] = useState('');
@@ -20,6 +22,7 @@ const Distiny = () => {
   const [helpNeeded, setHelpNeeded] = useState(false);
   const [selectedDate, setSelectedDate] = useState(null); // State for calendar
   const [message, setMessage] = useState('');
+  const navigate = useNavigate();
 
   const handleSave = async () => {
     // Logic to save the routine
@@ -33,9 +36,10 @@ const Distiny = () => {
       };  
       const response = await axios.post('http://localhost:5000/api/routines', data, config); // Changed to relative URL
       setMessage("Routine added successfully.")
+      navigate('/check-routine')
     } catch (error) {
       setMessage(error.response?.data?.message || 'Error while adding routine');
-
+      
     }
   };
 

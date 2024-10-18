@@ -17,7 +17,7 @@ const Future = () => {
 
     try {
       const response = await analyzeFuture({ text }); // Send text as an object
-      setResult(response);
+      setResult(response.message);
     } catch (error) {
       setError(error.response?.data?.error?.message || 'An error occurred while analyzing the future.');
     } finally {

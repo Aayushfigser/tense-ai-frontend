@@ -9,20 +9,15 @@ const apiClient = axios.create({
 
 // Analyze past experience
 export const analyzePast = async (experience) => {
-  const requestData = {
-    contents: [
-      {
-        parts: [
-          {
-            text: experience, // Sending the experience directly as text
-          },
-        ],
-      },
-    ],
-  };
 
   try {
-    const response = await apiClient.post('/past', requestData);
+    const token = localStorage.getItem('token');
+      const config = {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+    };  
+    const response = await apiClient.post('/past', experience, config);
     return response.data;
   } catch (error) {
     console.error('Error analyzing past experience:', error.response ? error.response.data : error.message);
@@ -32,20 +27,15 @@ export const analyzePast = async (experience) => {
 
 // Analyze present experience
 export const analyzePresent = async (text) => {
-  const requestData = {
-    contents: [
-      {
-        parts: [
-          {
-            text: text, // Sending the text directly as text
-          },
-        ],
-      },
-    ],
-  };
 
   try {
-    const response = await apiClient.post('/present', requestData);
+    const token = localStorage.getItem('token');
+      const config = {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+    };  
+    const response = await apiClient.post('/present', text, config);
     return response.data;
   } catch (error) {
     console.error('Error analyzing present experience:', error.response ? error.response.data : error.message);
@@ -55,20 +45,15 @@ export const analyzePresent = async (text) => {
 
 // Analyze future possibilities
 export const analyzeFuture = async (vision) => {
-  const requestData = {
-    contents: [
-      {
-        parts: [
-          {
-            text: vision, // Sending the vision directly as text
-          },
-        ],
-      },
-    ],
-  };
-
+  
   try {
-    const response = await apiClient.post('/future', requestData);
+    const token = localStorage.getItem('token');
+    const config = {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    }; 
+    const response = await apiClient.post('/future', vision, config);
     return response.data;
   } catch (error) {
     console.error('Error analyzing future possibilities:', error.response ? error.response.data : error.message);

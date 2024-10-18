@@ -17,7 +17,7 @@ const Past = () => {
 
     try {
       const response = await analyzePast({ text }); // Send text as an object
-      setResult(response);
+      setResult(response.message);
     } catch (error) {
       setError(error.response?.data?.error?.message || 'An error occurred while analyzing the past.');
     } finally {
